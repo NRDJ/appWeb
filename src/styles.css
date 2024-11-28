@@ -1,1 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+    --primary-color: rgb(27, 166, 189); /* Celeste claro */
+    --secondary-color: rgb(2, 150, 178); /* Celeste oscuro */
+    --tertiary-color: rgb(2, 100, 201); /* Azul */
+    --complementary-color: rgb(77, 182, 172); /* Verde Agua */
+    --complementary-color-2: rgb(0, 70, 112); /* Azul Marino */
+    --font-color: #333; /* Gris oscuro */
+}
