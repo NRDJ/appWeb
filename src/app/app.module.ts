@@ -10,6 +10,7 @@ import { HeroSectionComponent } from './components/hero-section/hero-section.com
 import { ServiciosComponent } from './components/servicios/servicios.component';
 import { UbicacionComponent } from './components/ubicacion/ubicacion.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { RegistroComponent } from './components/registro/registro.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { FooterComponent } from './components/footer/footer.component';
     HeroSectionComponent,
     ServiciosComponent,
     UbicacionComponent,
-    FooterComponent
+    FooterComponent,
+    RegistroComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,42 @@
-<!-- example.component.html -->
-<div class="example-container">
-    <h1>{{ title }}</h1>
-    <p>{{ description }}</p>
-    <button class="btn btn-primary">Bootstrap Button</button>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ekos</title>
+</head>
 
-  </div>
+<body>
+    <!-- Navbar -->
+    <app-navbar></app-navbar>
+    <app-hero-section></app-hero-section>
+    <main>
+      <section id="login" class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="text-center mb-4">Iniciar Sesión</h2>
+                            <form id="loginForm">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Correo Electrónico</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo electrónico" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Contraseña</label>
+                                    <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
+                            </form>
+                            <p class="text-center mt-3">¿No tienes una cuenta? <a href="registro.html">Regístrate aquí</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </main>
+    <app-footer></app-footer>
+</body>
+</html>
