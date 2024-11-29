@@ -11,6 +11,7 @@ import { ServiciosComponent } from './components/servicios/servicios.component';
 import { UbicacionComponent } from './components/ubicacion/ubicacion.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { RegistroComponent } from './components/registro/registro.component';
+import { AgendarHoraComponent } from './components/agendar-hora/agendar-hora.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { RegistroComponent } from './components/registro/registro.component';
     ServiciosComponent,
     UbicacionComponent,
     FooterComponent,
-    RegistroComponent
+    RegistroComponent,
+    AgendarHoraComponent
   ],
   imports: [
     BrowserModule,
