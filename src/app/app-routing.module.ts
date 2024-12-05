@@ -4,9 +4,14 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { AgendarHoraComponent } from './components/agendar-hora/agendar-hora.component';
+import { authGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+  { 
+    path: 'home', 
+    component: HomeComponent,
+    canActivate: [authGuard] // Protect the Home route
+  },
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegistroComponent },
   { path: 'agendar-hora', component: AgendarHoraComponent },

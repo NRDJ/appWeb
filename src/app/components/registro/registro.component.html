@@ -20,26 +20,56 @@
                         <div class="card">
                             <div class="card-body">
                                 <h2 class="text-center mb-4">Regístrate</h2>
-                                <form id="registerForm">
+                                <form (ngSubmit)="onRegister()" #registerForm="ngForm" id="registerForm">
                                     <div class="mb-3">
                                         <label for="nombre" class="form-label">Nombre Completo</label>
-                                        <input type="text" class="form-control" id="nombre" placeholder="Ingresa tu nombre completo" required>
+                                        <input name="username" #username="ngModel" [(ngModel)]="user.username" type="text" class="form-control" id="nombre" placeholder="Ingresa tu nombre completo" required minlength="3">
+                                        <div *ngIf="username.invalid && (username.dirty || username.touched)" class="text-danger">
+                                            <small *ngIf="username.errors?.['required']">El nombre completo es obligatorio.</small>
+                                            <small *ngIf="username.errors?.['minlength']">El nombre debe tener al menos 3 caracteres.</small>
+                                        </div>
                                     </div>
+                                    <!-- [ngClass]="{'is-invalid': email.invalid && (email.dirty || email.touched)}" -->
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Correo Electrónico</label>
-                                        <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo electrónico" required>
-                                    </div>
+                                        <input name="email" #email="ngModel" [(ngModel)]="user.email" type="email" class="form-control" id="email" placeholder="Ingresa tu correo electrónico" required appEmailValidator>
+                                        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                                          <small *ngIf="email.errors?.['required']">El correo electrónico es obligatorio.</small>
+                                          <small *ngIf="email.errors?.['email']">Ingresa un correo electrónico válido.</small>
+                                        </div>
+                                      </div>
                                     <div class="mb-3">
                                         <label for="password" class="form-label">Contraseña</label>
-                                        <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" required>
+                                        <input #password="ngModel" name="password" [(ngModel)]="user.password"type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" required appPasswordStrength>
+                                        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                                            <small *ngIf="password.errors?.['required']">El password es obligatorio.</small>
+                                            <small *ngIf="password.errors?.['noNumber']">El password debe contener al menos un número. </small>
+                                            <small *ngIf="password.errors?.['noUpper']">El password debe contener al menos una mayúscula. </small>
+                                            <small *ngIf="password.errors?.['noLower']">El password debe contener al menos una minúscula. </small>
+                                            <small *ngIf="password.errors?.['noSpecial']">El password debe contener al menos un carácter especial. </small>
+                                            <small *ngIf="password.errors?.['invalidLength']">El password debe contener entre 8 y 20 caracteres. </small>
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="confirm-password" class="form-label">Confirmar Contraseña</label>
-                                        <input type="password" class="form-control" id="confirm-password" placeholder="Confirma tu contraseña" required>
+                                        <input name="confirmPassword" [(ngModel)]="confirmPassword" type="password" class="form-control" id="confirm-password" placeholder="Confirma tu contraseña" required #confirmPasswordModel="ngModel">
+                                        <div *ngIf="passwordMismatch && (confirmPasswordModel.dirty || confirmPasswordModel.touched)" class="text-danger">
+                                            <small>Las contraseñas no coinciden.</small>
+                                        </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary w-100">Regístrate</button>
+                                    <!-- <button type="submit" class="btn btn-primary w-100">Regístrate</button> -->
+                                      <!-- Botón de Envío -->
+                                    <button type="submit" class="btn btn-primary w-100" [disabled]="registerForm.invalid || passwordMismatch">Regístrate</button>
+                                    <!-- Feedback Messages -->
+                                       <!-- Mensajes de Feedback -->
+                                    <div *ngIf="registrationFailed" class="alert alert-danger mt-3">
+                                        El nombre de usuario o email ya existe. Por favor usa uno distinto.
+                                    </div>
+                                    <div *ngIf="registrationSuccess" class="alert alert-success mt-3">
+                                        Registro exitoso, ahora puedes <a routerLink="/login">ingresar</a>.
+                                    </div>
                                 </form>
-                                <p class="text-center mt-3">¿Ya tienes una cuenta? <a href="ingreso.html">Inicia sesión aquí</a></p>
+                                <p class="text-center mt-3">¿Ya tienes una cuenta? <a href="/login">Inicia sesión aquí</a></p>
                             </div>
                         </div>
                     </div>

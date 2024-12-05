@@ -12,7 +12,9 @@ import { UbicacionComponent } from './components/ubicacion/ubicacion.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { AgendarHoraComponent } from './components/agendar-hora/agendar-hora.component';
-
+import { FormsModule } from '@angular/forms';
+import { PasswordStrengthDirective } from './validators/password-strength.directive'
+import { EmailValidatorDirective } from './validators/email-validator.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,11 +26,14 @@ import { AgendarHoraComponent } from './components/agendar-hora/agendar-hora.com
     UbicacionComponent,
     FooterComponent,
     RegistroComponent,
-    AgendarHoraComponent
+    AgendarHoraComponent,
+    PasswordStrengthDirective,
+    EmailValidatorDirective,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule // Add FormsModule here
   ],
   providers: [],
   bootstrap: [AppComponent]
