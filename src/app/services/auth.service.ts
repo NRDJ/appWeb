@@ -3,25 +3,26 @@ import { User } from '../models/user.model'; // Adjust the import according to y
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
   private usersKey = 'users';
-  private loggedInUserKey = 'loggedInUser';
+  public loggedInUserKey = 'loggedInUser';
 
   constructor() {}
 
   // Retrieve users from LocalStorage
-  private getUsers(): User[] {
+  public getUsers(): User[] {
     const users = localStorage.getItem(this.usersKey);
     return users ? JSON.parse(users) : [];
   }
 
   // Save users to LocalStorage
-  private saveUsers(users: User[]): void {
+  public saveUsers(users: User[]): void {
     localStorage.setItem(this.usersKey, JSON.stringify(users));
   }
 
   // Register a new user
-  register(user: User): boolean {
+  public register(user: User): boolean {
     const users = this.getUsers();
 
     // Check if username already exists
@@ -63,4 +64,9 @@ export class AuthService {
     const user = localStorage.getItem(this.loggedInUserKey);
     return user ? JSON.parse(user) : null;
   }
+
+    // Check if a user is logged in
+    public isLoggedIn(): boolean {
+      return this.getLoggedInUser() !== null;
+    }
 }

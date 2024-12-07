@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { PasswordStrengthDirective } from './validators/password-strength.directive'
 import { EmailValidatorDirective } from './validators/email-validator.directive';
 import { AgeValidatorDirective } from './validators/age-validator.directive';
+import { ProfileComponent } from './components/profile/profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +32,7 @@ import { AgeValidatorDirective } from './validators/age-validator.directive';
     PasswordStrengthDirective,
     EmailValidatorDirective,
     AgeValidatorDirective,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

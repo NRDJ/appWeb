@@ -20,7 +20,7 @@ export class LoginComponent {
     const success = this.authService.login(this.email, this.password);
 
     if (success) {
-      this.router.navigate(['/home']); // Redirect to home or another page
+      this.router.navigate(['/profile']); // Redirect to home or another page
     } else {
       this.loginFailed = true;
     }

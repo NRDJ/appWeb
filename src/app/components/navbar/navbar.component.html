@@ -36,11 +36,14 @@
             <li class="me-3 nav-item">
                 <a class="nav-link" href="/registro">Registro</a>
             </li>
-            <li class="me-3 nav-item">
+            <li class="me-3 nav-item" *ngIf="!isLoggedIn">
                 <a class="nav-link" routerLink="/login">Ingreso</a>
+              </li>
+            <li class="me-3 nav-item" *ngIf="isLoggedIn">
+                <a class="nav-link" routerLink="/profile">Perfil</a>
             </li>
-            <li class="me-3 nav-item d-none" id="logoutItem">
-                <a class="nav-link" href="#" id="logoutLink">Salir</a>
+            <li class="me-3 nav-item" *ngIf="isLoggedIn">
+                <a class="nav-link" href="#" (click)="onLogout()">Salir</a>
             </li>
             <li class="me-3 nav-item">
                 <span class="navbar-text ms-auto" id="welcomeMessage"></span>

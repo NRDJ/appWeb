@@ -1,0 +1,51 @@
+
+#profile .card {
+    border-radius: 25px;
+    background-color: var(--tertiary-color);
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+#profile .card-body {
+    padding: 2rem;
+}
+
+#profile .form-label {
+    color: white;
+}
+
+#profile .form-control {
+    border-radius: 10px;
+    border: none;
+    padding: 0.75rem 1rem;
+}
+
+#profile .btn-primary {
+    background-color: var(--secondary-color);
+    border: none;
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+#profile .btn-primary:hover {
+    background-color: var(--complementary-color);
+    transform: scale(1.05);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#profile a {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+#profile a:hover {
+    text-decoration: underline;
+}
+
+#profile #nombre {
+    background-color: #f8f9fa96;
+}

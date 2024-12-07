@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ekos</title>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <app-navbar></app-navbar>
+    <h1 class="text-center mt-5">Bienvenido a tu perfil</h1>
+    <main>
+        <section id="profile" class="py-5">
+            <div class="container">
+              <div class="row justify-content-center">
+                <div class="col-md-6">
+                  <div class="card">
+                    <div class="card-body">
+                      <h2 class="text-center mb-4">Modificar Perfil</h2>
+                      <form (ngSubmit)="onUpdateProfile()" #profileForm="ngForm" id="profileForm">
+                        <div class="mb-3">
+                          <label for="nombre" class="form-label">Nombre Completo</label>
+                          <input name="username" #username="ngModel" [(ngModel)]="user.username" type="text" class="form-control" id="nombre" placeholder="Ingresa tu nombre completo" required minlength="3" readonly>
+                          <div *ngIf="username.invalid && (username.dirty || username.touched)" class="text-danger">
+                            <small *ngIf="username.errors?.['required']">El nombre completo es obligatorio.</small>
+                            <small *ngIf="username.errors?.['minlength']">El nombre debe tener al menos 3 caracteres.</small>
+                        </div>
+                        </div>
+                        <div class="mb-3">
+                          <label for="email" class="form-label">Correo Electrónico</label>
+                          <input name="email" #email="ngModel" [(ngModel)]="user.email" type="email" class="form-control" id="email" placeholder="Ingresa tu correo electrónico" required appEmailValidator>
+                          <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                            <small *ngIf="email.errors?.['required']">El correo electrónico es obligatorio.</small>
+                            <small *ngIf="email.errors?.['email']">Ingresa un correo electrónico válido.</small>
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <label for="birthday" class="form-label">Fecha de Nacimiento</label>
+                          <input name="birthday" #birthday="ngModel" [(ngModel)]="user.birthday" type="date" class="form-control" id="birthday" required appAgeValidator>
+                          <div *ngIf="birthday.invalid && (birthday.dirty || birthday.touched)" class="text-danger">
+                            <small *ngIf="birthday.errors?.['required']">La fecha de nacimiento es obligatoria.</small>
+                            <small *ngIf="birthday.errors?.['underage']">Debes tener al menos 13 años para registrarte.</small>
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <label for="password" class="form-label">Contraseña</label>
+                          <input name="password" #password="ngModel" [(ngModel)]="user.password" type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" required appPasswordStrength>
+                          <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                            <small *ngIf="password.errors?.['required']">El password es obligatorio.</small>
+                            <small *ngIf="password.errors?.['noNumber']">El password debe contener al menos un número.</small>
+                            <small *ngIf="password.errors?.['noUpper']">El password debe contener al menos una mayúscula.</small>
+                            <small *ngIf="password.errors?.['noLower']">El password debe contener al menos una minúscula.</small>
+                            <small *ngIf="password.errors?.['noSpecial']">El password debe contener al menos un carácter especial.</small>
+                            <small *ngIf="password.errors?.['invalidLength']">El password debe contener entre 8 y 20 caracteres.</small>
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <label for="confirm-password" class="form-label">Confirmar Contraseña</label>
+                          <input name="confirmPassword" [(ngModel)]="confirmPassword" type="password" class="form-control" id="confirm-password" placeholder="Confirma tu contraseña" required #confirmPasswordModel="ngModel">
+                          <div *ngIf="passwordMismatch && (confirmPasswordModel.dirty || confirmPasswordModel.touched)" class="text-danger">
+                            <small>Las contraseñas no coinciden.</small>
+                          </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" [disabled]="profileForm.invalid || passwordMismatch">Actualizar Perfil</button>
+                        <!-- Feedback Messages -->
+                        <div *ngIf="updateFailed" class="alert alert-danger mt-3">
+                          Error al actualizar el perfil. Por favor, inténtalo de nuevo.
+                        </div>
+                        <div *ngIf="updateSuccess" class="alert alert-success mt-3">
+                          Perfil actualizado con éxito.
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+    </main>
+    <app-footer></app-footer>
+</body>
+</html>
