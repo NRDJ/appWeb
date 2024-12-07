@@ -1,28 +1,23 @@
 import { Injectable } from '@angular/core';
-
-interface User {
-  username: string;
-  password: string;
-  email: string;
-}
-
+import { User } from '../models/user.model'; // Adjust the import according to your project structure
 @Injectable({
   providedIn: 'root'
 })
-
 export class AuthService {
+  private usersKey = 'users';
+  private loggedInUserKey = 'loggedInUser';
 
-  constructor() { }
+  constructor() {}
 
   // Retrieve users from LocalStorage
   private getUsers(): User[] {
-    const users = localStorage.getItem('users');
+    const users = localStorage.getItem(this.usersKey);
     return users ? JSON.parse(users) : [];
   }
 
   // Save users to LocalStorage
   private saveUsers(users: User[]): void {
-    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem(this.usersKey, JSON.stringify(users));
   }
 
   // Register a new user
@@ -35,7 +30,7 @@ export class AuthService {
       return false; // Registration failed
     }
 
-    // Check if username already exists
+    // Check if email already exists
     const emailExists = users.find(u => u.email === user.email);
     if (emailExists) {
       return false; // Registration failed
@@ -47,5 +42,25 @@ export class AuthService {
     return true; // Registration successful
   }
 
-  // (Optional) Additional methods like login can be added here
+  // Login a user
+  login(email: string, password: string): boolean {
+    const users = this.getUsers();
+    const user = users.find(u => u.email === email && u.password === password);
+    if (user) {
+      localStorage.setItem(this.loggedInUserKey, JSON.stringify(user));
+      return true; // Login successful
+    }
+    return false; // Login failed
+  }
+
+  // Logout a user
+  logout(): void {
+    localStorage.removeItem(this.loggedInUserKey);
+  }
+
+  // Get the logged-in user
+  getLoggedInUser(): User | null {
+    const user = localStorage.getItem(this.loggedInUserKey);
+    return user ? JSON.parse(user) : null;
+  }
 }

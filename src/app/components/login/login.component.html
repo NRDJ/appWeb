@@ -18,18 +18,21 @@
                     <div class="card">
                         <div class="card-body">
                             <h2 class="text-center mb-4">Iniciar Sesión</h2>
-                            <form id="loginForm">
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Correo Electrónico</label>
-                                    <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo electrónico" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">Contraseña</label>
-                                    <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
+                            <form (ngSubmit)="onLogin()" #loginForm="ngForm" id="loginForm">
+                              <div class="mb-3">
+                                <label for="email" class="form-label">Correo Electrónico</label>
+                                <input [(ngModel)]="email" name="email" type="email" class="form-control" id="email" placeholder="Ingresa tu correo electrónico" required>
+                              </div>
+                              <div class="mb-3">
+                                <label for="password" class="form-label">Contraseña</label>
+                                <input [(ngModel)]="password" name="password" type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" required>
+                              </div>
+                              <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
+                              <div *ngIf="loginFailed" class="alert alert-danger mt-3">
+                                Correo electrónico o contraseña incorrectos.
+                              </div>
                             </form>
-                            <p class="text-center mt-3">¿No tienes una cuenta? <a href="/registro">Regístrate aquí</a></p>
+                            <p class="text-center mt-3">¿No tienes una cuenta? <a routerLink="/registro">Regístrate aquí</a></p>
                         </div>
                     </div>
                 </div>

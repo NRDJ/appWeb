@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -6,6 +8,21 @@ import { Component } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  title: string = 'Hello, Angular!';
-  description: string = 'This is an example component.';
+  email: string = '';
+  password: string = '';
+  loginFailed: boolean = false;
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+  onLogin(): void {
+    this.loginFailed = false;
+
+    const success = this.authService.login(this.email, this.password);
+
+    if (success) {
+      this.router.navigate(['/home']); // Redirect to home or another page
+    } else {
+      this.loginFailed = true;
+    }
+  }
 }

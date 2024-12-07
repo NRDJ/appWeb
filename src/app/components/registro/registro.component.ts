@@ -2,12 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { CustomValidators } from '../../validators/custom-validators';
-interface User {
-  username: string;
-  password: string;
-  email: string;
-  birthday: string;
-}
+import { User } from '../../models/user.model'; // Adjust the import according to your project structure
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
@@ -20,7 +15,8 @@ export class RegistroComponent {
     username: '',
     password: '',
     email: '',
-    birthday: ''
+    birthday: '',
+    role: 'patient' // Set default role to patient
   };
 
   confirmPassword: string = '';
