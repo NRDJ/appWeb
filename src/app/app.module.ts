@@ -15,6 +15,7 @@ import { AgendarHoraComponent } from './components/agendar-hora/agendar-hora.com
 import { FormsModule } from '@angular/forms';
 import { PasswordStrengthDirective } from './validators/password-strength.directive'
 import { EmailValidatorDirective } from './validators/email-validator.directive';
+import { AgeValidatorDirective } from './validators/age-validator.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +30,7 @@ import { EmailValidatorDirective } from './validators/email-validator.directive'
     AgendarHoraComponent,
     PasswordStrengthDirective,
     EmailValidatorDirective,
+    AgeValidatorDirective,
   ],
   imports: [
     BrowserModule,

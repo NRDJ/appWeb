@@ -6,6 +6,7 @@ interface User {
   username: string;
   password: string;
   email: string;
+  birthday: string;
 }
 @Component({
   selector: 'app-registro',
@@ -18,7 +19,8 @@ export class RegistroComponent {
   user: User = {
     username: '',
     password: '',
-    email: ''
+    email: '',
+    birthday: ''
   };
 
   confirmPassword: string = '';
@@ -52,9 +54,20 @@ export class RegistroComponent {
       this.user.username = '';
       this.user.password = '';
       this.user.email = '';
+      this.user.birthday = '';
       this.confirmPassword = '';
     } else {
       this.registrationFailed = true;
     }
+  }
+
+  onReset(): void {
+    this.user.username = '';
+    this.user.email = '';
+    this.user.birthday = '';
+    this.user.password = '';
+    this.confirmPassword = '';
+    this.registrationFailed = false;
+    this.registrationSuccess = false;
   }
 }

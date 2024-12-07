@@ -38,6 +38,14 @@
                                           <small *ngIf="email.errors?.['email']">Ingresa un correo electrónico válido.</small>
                                         </div>
                                       </div>
+                                      <div class="mb-3">
+                                        <label for="birthday" class="form-label">Fecha de Nacimiento</label>
+                                        <input name="birthday" #birthday="ngModel" [(ngModel)]="user.birthday" type="date" class="form-control" id="birthday" required appAgeValidator>
+                                        <div *ngIf="birthday.invalid && (birthday.dirty || birthday.touched)" class="text-danger">
+                                          <small *ngIf="birthday.errors?.['required']">La fecha de nacimiento es obligatoria.</small>
+                                          <small *ngIf="birthday.errors?.['underage']">Debes tener al menos 13 años para registrarte.</small>
+                                        </div>
+                                      </div>
                                     <div class="mb-3">
                                         <label for="password" class="form-label">Contraseña</label>
                                         <input #password="ngModel" name="password" [(ngModel)]="user.password"type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" required appPasswordStrength>
@@ -60,6 +68,7 @@
                                     <!-- <button type="submit" class="btn btn-primary w-100">Regístrate</button> -->
                                       <!-- Botón de Envío -->
                                     <button type="submit" class="btn btn-primary w-100" [disabled]="registerForm.invalid || passwordMismatch">Regístrate</button>
+                                    <button type="button" class="btn btn-secondary w-100 mt-2" (click)="onReset()">Limpiar</button>
                                     <!-- Feedback Messages -->
                                        <!-- Mensajes de Feedback -->
                                     <div *ngIf="registrationFailed" class="alert alert-danger mt-3">
