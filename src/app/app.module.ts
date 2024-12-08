@@ -17,6 +17,7 @@ import { PasswordStrengthDirective } from './validators/password-strength.direct
 import { EmailValidatorDirective } from './validators/email-validator.directive';
 import { AgeValidatorDirective } from './validators/age-validator.directive';
 import { ProfileComponent } from './components/profile/profile.component';
+import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +34,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     EmailValidatorDirective,
     AgeValidatorDirective,
     ProfileComponent,
+    PasswordRecoveryComponent,
   ],
   imports: [
     BrowserModule,

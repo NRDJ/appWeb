@@ -5,6 +5,7 @@ import { HomeComponent } from './components/home/home.component';
 import { RegistroComponent } from './components/registro/registro.component';
 import { AgendarHoraComponent } from './components/agendar-hora/agendar-hora.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { authGuard } from './guards/auth.guard';
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'registro', component: RegistroComponent },
   { path: 'agendar-hora', component: AgendarHoraComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'password-recovery', component: PasswordRecoveryComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
 ];
