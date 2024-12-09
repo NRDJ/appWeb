@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.model';
 import { Router } from '@angular/router';
-
+import { ScheduleService } from '../../services/schedule.service';
 
 @Component({
   selector: 'app-profile',
@@ -24,8 +24,12 @@ export class ProfileComponent implements OnInit {
   activeCard: string = '';
   doctors: User[] = [];
   selectedDoctor: User | null = null;
+  hours: any[] = []; // Array to store scheduled hours
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, 
+    private scheduleService: ScheduleService, 
+    private router: Router
+  ) {}
 
     // Getter to check if passwords match
     get passwordMismatch(): boolean {
@@ -78,5 +82,41 @@ export class ProfileComponent implements OnInit {
 
   setActiveCard(card: string): void {
     this.activeCard = this.activeCard === card ? '' : card;
+  }
+
+  // Load scheduled hours
+  loadHours(): void {
+    this.scheduleService.getHours().subscribe(hours => {
+      this.hours = hours;
+    });
+  }
+
+    // Schedule a new hour
+  scheduleHour(form: any): void {
+    const newHour = {
+      patient: this.user.username,
+      doctor: this.selectedDoctor?.username,
+      date: form.value.fecha,
+      time: form.value.hora
+    };
+
+    this.scheduleService.addHour(newHour).subscribe(() => {
+      this.loadHours(); // Reload hours after scheduling
+      this.setActiveCard(''); // Close the form
+    });
+  }
+
+  // Delete an hour
+  deleteHour(id: string): void {
+    this.scheduleService.deleteHour(id).subscribe(() => {
+      this.loadHours(); // Reload hours after deletion
+    });
+  }
+
+  // Edit an hour
+  editHour(id: string, updatedHour: any): void {
+    this.scheduleService.updateHour(id, updatedHour).subscribe(() => {
+      this.loadHours(); // Reload hours after editing
+    });
   }
 }

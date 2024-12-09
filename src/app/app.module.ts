@@ -18,6 +18,9 @@ import { EmailValidatorDirective } from './validators/email-validator.directive'
 import { AgeValidatorDirective } from './validators/age-validator.directive';
 import { ProfileComponent } from './components/profile/profile.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
+import { HttpClientModule } from '@angular/common/http'; 
+import { AuthService } from './services/auth.service';
+import { ScheduleService } from './services/schedule.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,9 +42,10 @@ import { PasswordRecoveryComponent } from './components/password-recovery/passwo
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule // Add FormsModule here
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [AuthService, ScheduleService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -46,7 +46,7 @@
     text-decoration: underline;
 }
 
-#profile #nombre {
+#profile #nombre, #profile #nombre2, #profile #email2 {
     background-color: #f8f9fa96;
 }
 
