@@ -14,7 +14,7 @@ export class JsonService {
     })
   };
 
-  private jsonURL = 'https://firebasestorage.googleapis.com/v0/b/angularapp-5a377.firebasestorage.app/o/personas.json?alt=media&token=43c1caef-7836-40cb-b31f-aeaa79e05ddc';
+  private jsonURL = 'https://personasbucket.s3.us-east-1.amazonaws.com/personas.json';
 
   constructor(private http: HttpClient) {}
 
