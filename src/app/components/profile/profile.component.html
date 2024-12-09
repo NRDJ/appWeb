@@ -9,16 +9,17 @@
 <body>
     <!-- Navbar -->
     <app-navbar></app-navbar>
-    <h1 class="text-center mt-5">Bienvenido a tu perfil</h1>
+    <h1 class="text-center mt-5">Bienvenido a tu perfil {{user.username}}!</h1>
     <main>
         <section id="profile" class="py-5">
             <div class="container">
               <div class="row justify-content-center">
-                <div class="col-md-6">
+                <div class="col-12 col-md-6 col-lg-4 mb-3">
                   <div class="card">
                     <div class="card-body">
-                      <h2 class="text-center mb-4">Modificar Perfil</h2>
-                      <form (ngSubmit)="onUpdateProfile()" #profileForm="ngForm" id="profileForm">
+                      <button class="btn btn-primary w-100" (click)="setActiveCard('modificar')">Modificar Perfil</button>
+
+                      <form (ngSubmit)="onUpdateProfile()" #profileForm="ngForm" id="profileForm" *ngIf="activeCard === 'modificar'">
                         <div class="mb-3">
                           <label for="nombre" class="form-label">Nombre Completo</label>
                           <input name="username" #username="ngModel" [(ngModel)]="user.username" type="text" class="form-control" id="nombre" placeholder="Ingresa tu nombre completo" required minlength="3" readonly>
@@ -71,6 +72,69 @@
                           Perfil actualizado con éxito.
                         </div>
                       </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 mb-3" *ngIf="user.role === 'patient'">
+                  <div class="card">
+                      <div class="card-body">
+                          <button class="btn btn-primary w-100" (click)="setActiveCard('agendar')">Agendar Hora</button>
+                          <form id="agendarForm" *ngIf="activeCard === 'agendar'">
+                              <div class="mb-3">
+                                  <label for="nombre" class="form-label">Nombre Completo</label>
+                                  <input type="text" class="form-control" id="nombre" placeholder="Ingresa tu nombre completo" required>
+                              </div>
+                              <div class="mb-3">
+                                  <label for="email" class="form-label">Correo Electrónico</label>
+                                  <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo electrónico" required>
+                              </div>
+                              <div class="mb-3">
+                                  <label for="telefono" class="form-label">Teléfono</label>
+                                  <input type="tel" class="form-control" id="telefono" placeholder="Ingresa tu número de teléfono" required>
+                              </div>
+                              <!-- <div class="mb-3">
+                                  <label for="servicio" class="form-label">Servicio</label>
+                                  <select class="form-select" id="servicio" required>
+                                      <option value="" disabled selected>Selecciona un servicio</option>
+                                      <option value="Medicina General">Medicina General</option>
+                                      <option value="Kinesiología">Kinesiología</option>
+                                      <option value="Radiología">Radiología</option>
+                                      <option value="Obstetricia">Obstetricia</option>
+                                      <option value="Fonoaudiología">Fonoaudiología</option>
+                                      <option value="Odontología">Odontología</option>
+                                  </select>
+                              </div> -->
+                              <div class="mb-3">
+                                <label for="doctor" class="form-label">Doctor</label>
+                                <select class="form-select" id="doctor" required [(ngModel)]="selectedDoctor" *ngIf="doctors.length > 0">
+                                  <option value="" disabled selected>Selecciona un doctor</option>
+                                  <option *ngFor="let doctor of doctors" [ngValue]="doctor">{{ doctor.username }} ({{ doctor.email }})</option>
+                                </select>
+                                <div *ngIf="doctors.length === 0" class="text-danger">
+                                  <small>Mostrando doctores...</small>
+                                </div>
+                            </div>
+                              <div class="mb-3">
+                                  <label for="fecha" class="form-label">Fecha</label>
+                                  <input type="date" class="form-control" id="fecha" required>
+                              </div>
+                              <div class="mb-3">
+                                  <label for="hora" class="form-label">Hora</label>
+                                  <input type="time" class="form-control" id="hora" required>
+                              </div>
+                              <button type="submit" class="btn btn-primary w-100">Agendar Hora</button>
+                          </form>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 mb-3" *ngIf="user.role === 'patient'">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <button class="btn btn-primary w-100" (click)="setActiveCard('verHoras')">Ver Horas Agendadas</button>
+                      <div *ngIf="activeCard === 'verHoras'">
+                        <!-- Ver Horas Agendadas Content -->
+                        <p>Aquí puedes ver tus horas agendadas.</p>
+                      </div>
                     </div>
                   </div>
                 </div>

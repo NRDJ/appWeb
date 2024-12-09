@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.model';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -16,9 +17,13 @@ export class ProfileComponent implements OnInit {
     birthday: '',
     role: 'patient'
   };
+
   confirmPassword: string = '';
   updateSuccess: boolean = false;
   updateFailed: boolean = false;
+  activeCard: string = '';
+  doctors: User[] = [];
+  selectedDoctor: User | null = null;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -31,6 +36,9 @@ export class ProfileComponent implements OnInit {
     const loggedInUser = this.authService.getLoggedInUser();
     if (loggedInUser) {
       this.user = loggedInUser;
+      if (this.user.role === 'patient') {
+        this.doctors = this.authService.getDoctors();
+      }
     } else {
       this.router.navigate(['/login']); // Redirect to login if not logged in
     }
@@ -66,5 +74,9 @@ export class ProfileComponent implements OnInit {
       this.updateSuccess = false;
       this.updateFailed = false;
     }
+  }
+
+  setActiveCard(card: string): void {
+    this.activeCard = this.activeCard === card ? '' : card;
   }
 }

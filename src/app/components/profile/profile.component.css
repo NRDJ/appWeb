@@ -49,3 +49,13 @@
 #profile #nombre {
     background-color: #f8f9fa96;
 }
+
+body, html {
+    height: 100%;
+    margin: 0;
+  }
+  
+  main {
+    min-height: calc(100vh - 100px); /* Adjust based on your header and footer height */
+    padding-bottom: 50px; /* Adjust based on your footer height */
+  }

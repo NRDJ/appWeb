@@ -8,7 +8,16 @@ export class AuthService {
   private usersKey = 'users';
   public loggedInUserKey = 'loggedInUser';
 
-  constructor() {}
+  constructor() {
+    // Initialize with two doctor users if not already present
+    const users = this.getUsers();
+    if (users.length === 0) {
+      this.saveUsers([
+        { username: 'doctor1', email: 'doctor1@gmail.com', password: '!123Password123!', role: 'doctor' },
+        { username: 'doctor2', email: 'doctor2@gmail.com', password: '!123Password123!', role: 'doctor' }
+      ]);
+    }
+  }
 
   // Retrieve users from LocalStorage
   public getUsers(): User[] {
@@ -68,5 +77,11 @@ export class AuthService {
     // Check if a user is logged in
     public isLoggedIn(): boolean {
       return this.getLoggedInUser() !== null;
+    }
+
+    // Get all doctors
+    public getDoctors(): User[] {
+      const users = this.getUsers();
+      return users.filter(user => user.role === 'doctor');
     }
 }
