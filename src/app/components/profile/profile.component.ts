@@ -37,6 +37,7 @@ export class ProfileComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    this.loadHours();
     const loggedInUser = this.authService.getLoggedInUser();
     if (loggedInUser) {
       this.user = loggedInUser;

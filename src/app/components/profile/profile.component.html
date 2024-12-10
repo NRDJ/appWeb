@@ -136,7 +136,7 @@
                        <ul class="list-group">
                         <li class="list-group-item" *ngFor="let hour of hours">
                           {{ hour.date }} {{ hour.time }} con {{ hour.doctor }}
-                          <button class="btn btn-danger btn-sm float-end ms-2" (click)="deleteHour(hour.id)">Cancelar</button>
+                          <button class="btn btn-danger btn-sm float-end ms-2" (click)="deleteHour(hour)">Cancelar</button>
                           <button class="btn btn-warning btn-sm float-end" (click)="editHour(hour.id, hour)">Editar</button>
                         </li>
                       </ul>
