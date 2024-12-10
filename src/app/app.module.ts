@@ -21,6 +21,7 @@ import { PasswordRecoveryComponent } from './components/password-recovery/passwo
 import { HttpClientModule } from '@angular/common/http'; 
 import { AuthService } from './services/auth.service';
 import { ScheduleService } from './services/schedule.service';
+import { ConocenosComponent } from './components/conocenos/conocenos.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +39,7 @@ import { ScheduleService } from './services/schedule.service';
     AgeValidatorDirective,
     ProfileComponent,
     PasswordRecoveryComponent,
+    ConocenosComponent,
   ],
   imports: [
     BrowserModule,

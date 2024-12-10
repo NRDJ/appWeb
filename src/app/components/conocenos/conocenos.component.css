@@ -1,0 +1,18 @@
+.background-image {
+    background-image: url('../../../assets/hero-bg-3.png'); /* Replace with your image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 25rem; /* Ensure the height is 100% to fill the column */
+  }
+
+  .row {
+    background-color: var(--tertiary-color);
+    border-radius: 25px;
+    color: white;
+    padding: 25px;
+  }
+
+  p {
+    font-size: 15px;
+  }
