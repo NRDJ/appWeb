@@ -5,6 +5,9 @@
     color: white;
     padding: 1rem;
     margin-top: 1rem;
+    border-radius: 25px;
+    padding: 25px;
+
 }
 
 .embed-responsive {
