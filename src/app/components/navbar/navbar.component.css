@@ -16,6 +16,12 @@ nav {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
 } 
 
+.navbar-logo {
+    width: 75px; /* Adjust to a suitable size */
+    max-width: 100%;
+    height: auto;
+}
+
 .navbar-nav .nav-link {
     position: relative; /* Add this line */
     color: var(--tertiary-color);
