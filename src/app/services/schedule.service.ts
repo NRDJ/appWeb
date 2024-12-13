@@ -1,63 +1,84 @@
+// src/app/services/schedule.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { AwsS3Service } from './aws-s3.service';
+import { Observable, from, of } from 'rxjs';
+import { map, catchError, switchMap } from 'rxjs/operators';
+import { Hora } from '../models/hora.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ScheduleService {
-  private presignedUrlApi = 'http://localhost:4200/'; // Replace with your server URL
-  private apiUrl = 'https://horas.s3.us-east-1.amazonaws.com/horas.json'; // Replace with your actual S3 bucket URL
-  
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  };
+  private key = 'horas.json';
 
-  constructor(private http: HttpClient) {}
+  constructor(private awsS3Service: AwsS3Service) {}
 
-  // POST: Add a new hour
-  addHour(hour: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, hour, this.httpOptions);
-  }
-
-  getHours(): Observable<any[]> {
-    return this.http.get<any>(this.apiUrl).pipe(
-      map(data => {
-        // Ensure the data is an array
-        return Array.isArray(data) ? data : [];
-      })
+  getHours(): Observable<Hora[]> {
+    return from(this.awsS3Service.getJsonFile(this.key)).pipe(
+      map((data: any) => data as Hora[]),
+      catchError(() => of([]))
     );
   }
 
-  // PUT: Update an existing hour
-  updateHour(id: string, hour: any): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.put<any>(url, hour, this.httpOptions);
-  }
-
-  // DELETE: Delete an hour
-  // deleteHour(id: string): Observable<any> {
-  //   const url = `${this.apiUrl}/${id}`;
-  //   return this.http.delete<any>(url, this.httpOptions);
-  // }
-
-    // DELETE: Delete an hour
-    deleteHour(hourToDelete: any): Observable<any> {
-      return this.getHours().pipe(
-        switchMap(existingHours => {
-          const updatedHours = existingHours.filter(hour => hour !== hourToDelete);
-          return this.http.get<{ url: string }>(this.presignedUrlApi).pipe(
-            switchMap(response => {
-              const url = response.url;
-              return this.http.put(url, JSON.stringify(updatedHours), {
-                headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-              });
+  addHour(hora: Hora): Observable<void> {
+    return from(this.awsS3Service.fileExists(this.key)).pipe(
+      switchMap((exists: boolean) => {
+        if (exists) {
+          return from(this.awsS3Service.getJsonFile(this.key)).pipe(
+            switchMap((existingHoras: Hora[]) => {
+              existingHoras.push(hora);
+              return from(this.awsS3Service.uploadJsonFile(this.key, existingHoras));
             })
           );
-        })
-      );
-    }
+        } else {
+          const horas: Hora[] = [hora];
+          return from(this.awsS3Service.uploadJsonFile(this.key, horas));
+        }
+      }),
+      catchError(() => of())
+    );
+  }
+
+  deleteHour(hora: Hora): Observable<void> {
+    return from(this.awsS3Service.fileExists(this.key)).pipe(
+      switchMap((exists: boolean) => {
+        if (!exists) {
+          return of();
+        }
+        return from(this.awsS3Service.getJsonFile(this.key)).pipe(
+          switchMap((existingHoras: Hora[]) => {
+            const updatedHoras = existingHoras.filter(
+              (h: Hora) =>
+                !(h.date === hora.date && h.time === hora.time && h.doctor === hora.doctor)
+            );
+            return from(this.awsS3Service.uploadJsonFile(this.key, updatedHoras));
+          })
+        );
+      }),
+      catchError(() => of())
+    );
+  }
+
+  updateHour(id: string, updatedHora: Hora): Observable<void> {
+    return from(this.awsS3Service.fileExists(this.key)).pipe(
+      switchMap((exists: boolean) => {
+        if (!exists) {
+          return of();
+        }
+        return from(this.awsS3Service.getJsonFile(this.key)).pipe(
+          switchMap((existingHoras: Hora[]) => {
+            const index = existingHoras.findIndex(
+              (h: Hora) => h.date === updatedHora.date && h.time === updatedHora.time && h.doctor === updatedHora.doctor
+            );
+            if (index !== -1) {
+              existingHoras[index] = updatedHora;
+              return from(this.awsS3Service.uploadJsonFile(this.key, existingHoras));
+            }
+            return of();
+          })
+        );
+      }),
+      catchError(() => of())
+    );
+  }
 }

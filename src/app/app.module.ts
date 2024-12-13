@@ -22,6 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { ScheduleService } from './services/schedule.service';
 import { ConocenosComponent } from './components/conocenos/conocenos.component';
+import { S3ManagerComponent } from './components/s3-manager/s3-manager.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +41,7 @@ import { ConocenosComponent } from './components/conocenos/conocenos.component';
     ProfileComponent,
     PasswordRecoveryComponent,
     ConocenosComponent,
+    S3ManagerComponent,
   ],
   imports: [
     BrowserModule,

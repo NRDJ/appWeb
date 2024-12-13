@@ -13,14 +13,44 @@ import {HttpClientModule} from '@angular/common/http';
 })
 export class ListaPersonasComponent implements OnInit {
 
-  personas: any;
+  horas: any;
 
   constructor(private jsonService: JsonService) { }
 
   ngOnInit() {
     this.jsonService.getJsonData().subscribe(data => {
-      this.personas = data;
+      this.horas = data;
     });
   }
 
+  eliminar(hora: any) {
+    const index = this.horas.findIndex((elemento:any) => elemento.id === hora.id);
+
+    if(index !== -1) {
+      this.horas.splice(index, 1);
+      this.jsonService.MetodoHora(this.horas);
+    } else {
+      console.log("No se encontró el elemento");
+      window.alert("No se encontró el elemento");
+    }
+  }
+
+  modificar(hora: any) {
+    const index = this.horas.findIndex((elemento:any) => elemento.id === hora.id);
+
+    if(index !== -1) {
+      const nueva : any = {
+        id: hora.id,
+        date: hora.date,
+        time: hora.time,
+        doctor: hora.doctor
+      };
+      this.horas[index] = { ...this.horas[index], ...nueva };
+      this.jsonService.MetodoHora(this.horas);
+      
+    } else {
+      console.log("No se encontró el elemento");
+      window.alert("No se encontró el elemento");
+    }
+  }
 }

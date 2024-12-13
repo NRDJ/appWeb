@@ -1,18 +1,18 @@
 <div class="container">
-    <h2 class="text-center my-4">Lista de Personas</h2>
+    <h2 class="text-center my-4">Horas</h2>
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>Nombre</th>
-          <th>Edad</th>
-          <th>Correo Electrónico</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Doctor</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let persona of personas">
-          <td>{{ persona.name }}</td>
-          <td>{{ persona.age }}</td>
-          <td>{{ persona.email }}</td>
+        <tr *ngFor="let hora of horas">
+          <td>{{ hora.date }}</td>
+          <td>{{ hora.time }}</td>
+          <td>{{ hora.doctor }}</td>
         </tr>
       </tbody>
     </table>

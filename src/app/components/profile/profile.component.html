@@ -88,27 +88,11 @@
                                   <label for="email" class="form-label">Correo Electrónico</label>
                                   <input class="mt-5" name="email" #email="ngModel" [(ngModel)]="user.email" type="email" class="form-control" id="email2" required minlength="3" readonly>
                                 </div>
-                              <!-- <div class="mb-3">
-                                  <label for="telefono" class="form-label">Teléfono</label>
-                                  <input type="tel" class="form-control" id="telefono" placeholder="Ingresa tu número de teléfono" required>
-                              </div> -->
-                              <!-- <div class="mb-3">
-                                  <label for="servicio" class="form-label">Servicio</label>
-                                  <select class="form-select" id="servicio" required>
-                                      <option value="" disabled selected>Selecciona un servicio</option>
-                                      <option value="Medicina General">Medicina General</option>
-                                      <option value="Kinesiología">Kinesiología</option>
-                                      <option value="Radiología">Radiología</option>
-                                      <option value="Obstetricia">Obstetricia</option>
-                                      <option value="Fonoaudiología">Fonoaudiología</option>
-                                      <option value="Odontología">Odontología</option>
-                                  </select>
-                              </div> -->
                               <div class="mb-3">
                                 <label for="doctor" class="form-label">Doctor</label>
                                 <select class="form-select" id="doctor" required [(ngModel)]="selectedDoctor" name="doctor" *ngIf="doctors.length > 0">
                                   <option value="" disabled selected>Selecciona un doctor</option>
-                                  <option *ngFor="let doctor of doctors" [ngValue]="doctor">{{ doctor.username }} ({{ doctor.email }})</option>
+                                  <option *ngFor="let doctor of doctors" [ngValue]="doctor.username">{{ doctor.username }} ({{ doctor.email }})</option>
                                 </select>
                                 <div *ngIf="doctors.length === 0" class="text-danger">
                                   <small>Mostrando doctores...</small>
@@ -116,13 +100,20 @@
                             </div>
                               <div class="mb-3">
                                   <label for="fecha" class="form-label">Fecha</label>
-                                  <input type="date" class="form-control" id="fecha" name="fecha" required>
+                                  <input type="date" class="form-control" id="fecha" name="fecha" required [(ngModel)]="newHora.date">
                               </div>
                               <div class="mb-3">
                                   <label for="hora" class="form-label">Hora</label>
-                                  <input type="time" class="form-control" id="hora" name="hora" required>
+                                  <input type="time" class="form-control" id="hora" name="hora" required [(ngModel)]="newHora.time">
                               </div>
-                              <button type="submit" class="btn btn-primary w-100">Agendar Hora</button>
+                              <button type="submit" class="btn btn-primary w-100" [disabled]="isLoading">Agendar Hora</button>
+                              <!-- Feedback Messages -->
+                              <div *ngIf="uploadStatus" class="alert alert-info mt-3">
+                                {{ uploadStatus }}
+                              </div>
+                              <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+                                {{ errorMessage }}
+                              </div>
                           </form>
                       </div>
                   </div>
@@ -137,7 +128,7 @@
                         <li class="list-group-item" *ngFor="let hour of hours">
                           {{ hour.date }} {{ hour.time }} con {{ hour.doctor }}
                           <button class="btn btn-danger btn-sm float-end ms-2" (click)="deleteHour(hour)">Cancelar</button>
-                          <button class="btn btn-warning btn-sm float-end" (click)="editHour(hour.id, hour)">Editar</button>
+                          <button class="btn btn-warning btn-sm float-end" (click)="editHour(hour.id || '', hour)">Editar</button>
                         </li>
                       </ul>
                       </div>
@@ -154,7 +145,7 @@
                         <li class="list-group-item" *ngFor="let hour of hours">
                           {{ hour.date }} {{ hour.time }} con {{ hour.doctor }}
                           <button class="btn btn-danger btn-sm float-end ms-2" (click)="deleteHour(hour)">Cancelar</button>
-                          <button class="btn btn-warning btn-sm float-end" (click)="editHour(hour.id, hour)">Editar</button>
+                          <button class="btn btn-warning btn-sm float-end" (click)="editHour(hour.id || '', hour)">Editar</button>
                         </li>
                       </ul>
                       </div>

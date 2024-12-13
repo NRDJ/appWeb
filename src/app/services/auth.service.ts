@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model'; // Adjust the import according to your project structure
+
 @Injectable({
   providedIn: 'root'
 })

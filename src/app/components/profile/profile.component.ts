@@ -1,8 +1,10 @@
+// src/app/components/profile/profile.component.ts
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.model';
 import { Router } from '@angular/router';
 import { ScheduleService } from '../../services/schedule.service';
+import { Hora } from '../../models/hora.model';
 
 @Component({
   selector: 'app-profile',
@@ -23,21 +25,26 @@ export class ProfileComponent implements OnInit {
   updateFailed: boolean = false;
   activeCard: string = '';
   doctors: User[] = [];
-  selectedDoctor: User | null = null;
-  hours: any[] = []; // Array to store scheduled hours
+  selectedDoctor: string = '';
+  hours: Hora[] = []; // Array to store scheduled hours
+  newHora: Hora = { id: '', date: '', time: '', doctor: '' }; // Initialize newHora
+  isLoading: boolean = false;
+  uploadStatus: string = '';
+  errorMessage: string = '';
 
-  constructor(private authService: AuthService, 
+  constructor(
+    private authService: AuthService, 
     private scheduleService: ScheduleService, 
     private router: Router
   ) {}
 
-    // Getter to check if passwords match
-    get passwordMismatch(): boolean {
-      return this.user.password !== this.confirmPassword;
-    }
+  // Getter to check if passwords match
+  get passwordMismatch(): boolean {
+    return this.user.password !== this.confirmPassword;
+  }
 
   ngOnInit(): void {
-    this.loadHours();
+    this.loadHoras();
     const loggedInUser = this.authService.getLoggedInUser();
     if (loggedInUser) {
       this.user = loggedInUser;
@@ -86,38 +93,56 @@ export class ProfileComponent implements OnInit {
   }
 
   // Load scheduled hours
-  loadHours(): void {
-    this.scheduleService.getHours().subscribe(hours => {
-      this.hours = hours;
+  loadHoras(): void {
+    this.scheduleService.getHours().subscribe((hours: Hora[]) => {
+      this.hours = hours.map(hour => ({
+        id: hour.id, // Ensure id is included
+        date: hour.date,
+        time: hour.time,
+        doctor: hour.doctor
+      }));
     });
   }
 
-    // Schedule a new hour
-  scheduleHour(form: any): void {
-    const newHour = {
-      patient: this.user.username,
-      doctor: this.selectedDoctor?.username,
-      date: form.value.fecha,
-      time: form.value.hora
-    };
+// Schedule a new hora
+scheduleHour(form: any): void {
+  const newHour: Hora = {
+    id: '', // Ensure an ID is included if necessary
+    date: form.value.fecha,
+    time: form.value.hora,
+    doctor: this.selectedDoctor
+  };
+  console.log('Nueva hora:', newHour);
 
-    this.scheduleService.addHour(newHour).subscribe(() => {
-      this.loadHours(); // Reload hours after scheduling
+  // Subscribe to the observable returned by addHour
+  this.scheduleService.addHour(newHour).subscribe(
+    () => {
+      console.log("Justo antes de load horas");
+      this.loadHoras(); // Reload hours after scheduling
+      console.log("Justo despues de load horas");
       this.setActiveCard(''); // Close the form
-    });
-  }
+    },
+    error => {
+      console.error('Error al agendar hora:', error);
+    }
+  );
+}
 
   // Delete an hour
-  deleteHour(id: string): void {
-    this.scheduleService.deleteHour(id).subscribe(() => {
-      this.loadHours(); // Reload hours after deletion
+  deleteHour(hour: Hora): void {
+    this.scheduleService.deleteHour(hour).subscribe(() => {
+      this.loadHoras(); // Reload hours after deletion
+    }, error => {
+      console.error('Error al cancelar hora:', error);
     });
   }
 
   // Edit an hour
-  editHour(id: string, updatedHour: any): void {
+  editHour(id: string, updatedHour: Hora): void {
     this.scheduleService.updateHour(id, updatedHour).subscribe(() => {
-      this.loadHours(); // Reload hours after editing
+      this.loadHoras(); // Reload hours after editing
+    }, error => {
+      console.error('Error al editar hora:', error);
     });
   }
 }

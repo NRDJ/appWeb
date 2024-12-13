@@ -1,0 +1,33 @@
+/* src/app/components/s3-manager/s3-manager.component.css */
+.s3-manager {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 500px;
+    margin: 20px auto;
+    text-align: center;
+  }
+  
+  .s3-manager h2 {
+    margin-bottom: 20px;
+  }
+  
+  .s3-manager input {
+    margin-bottom: 10px;
+  }
+  
+  .s3-manager button {
+    margin: 5px;
+  }
+  
+  .s3-manager p {
+    margin: 10px 0;
+  }
+  
+  .s3-manager img {
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+  }
+  
