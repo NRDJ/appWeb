@@ -52,7 +52,6 @@ import { ExampleComponent } from './components/example/example.component'; // Im
         BrowserModule,
         CommonModule,
         AppRoutingModule,
-        BrowserModule,
         AngularFireModule.initializeApp(firebaseConfig),
         AngularFirestoreModule,
         FormsModule], providers: [AuthService, provideHttpClient(withInterceptorsFromDi())] })
