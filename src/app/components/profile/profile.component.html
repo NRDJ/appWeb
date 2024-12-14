@@ -108,8 +108,8 @@
                               </div>
                               <button type="submit" class="btn btn-primary w-100" [disabled]="isLoading">Agendar Hora</button>
                               <!-- Feedback Messages -->
-                              <div *ngIf="uploadStatus" class="alert alert-info mt-3">
-                                {{ uploadStatus }}
+                              <div *ngIf="successMessage" class="alert alert-success mt-3">
+                                {{ successMessage }}
                               </div>
                               <div *ngIf="errorMessage" class="alert alert-danger mt-3">
                                 {{ errorMessage }}
@@ -200,6 +200,13 @@
                               </tr>
                             </tbody>
                           </table>
+                                                    <!-- Feedback Messages -->
+                          <div *ngIf="successMessage" class="alert alert-success mt-3">
+                            {{ successMessage }}
+                          </div>
+                          <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+                            {{ errorMessage }}
+                          </div>
                         </div>
                         
                       </div>

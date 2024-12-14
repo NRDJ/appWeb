@@ -45,6 +45,7 @@ export class ProfileComponent{
   isLoading: boolean = false;
   uploadStatus: string = '';
   errorMessage: string = '';
+  successMessage: string = '';
 
   // Fields for editing an existing document
   selectedDocument: any = null;  // will hold the document object to be edited
@@ -54,6 +55,7 @@ export class ProfileComponent{
 
   // Tracks the row being edited
   editingHour: any = null;
+
 
   ngOnInit(): void {
     this.getDocuments();
@@ -76,13 +78,21 @@ export class ProfileComponent{
       doctor: this.selectedDoctor,
     };
 
-    this.firestoreService.createDocument('horas', data).then(() => {
-      console.log('Document created');
-      this.date = '';
-      this.time = '';
-      this.doctor = '';
-      this.getDocuments();
-    });
+    this.firestoreService.createDocument('horas', data)
+      .then(() => {
+        console.log('Document created');
+        this.successMessage = 'Hora agendada exitosamente.'; // Set success message
+        this.errorMessage = ''; // Reset error message
+        this.date = '';
+        this.time = '';
+        this.selectedDoctor = ''; // Reset selected doctor
+        this.getDocuments(); // Refresh documents list
+      })
+      .catch((error) => {
+        console.error('Error creating document:', error);
+        this.errorMessage = 'Hubo un problema al agendar la hora. Intenta nuevamente.'; // Set error message
+        this.successMessage = ''; // Reset success message
+      });
   }
 
   // Get documents from the 'horas' collection
@@ -102,14 +112,26 @@ export class ProfileComponent{
   }
 
 
-    // Delete a document
-    deleteDocument(id: string): void {
-      window.confirm('¿Estás seguro de que quieres cancelar esta hora? Una vez cancelada, no se podrá recuperar.');
-      this.firestoreService.deleteDocument('horas', id).then(() => {
-        console.log('hora cancelada');
-        this.getDocuments();
-      });
+  // Delete a document
+  deleteDocument(id: string): void {
+    const confirmation = window.confirm('¿Estás seguro de que quieres cancelar esta hora? Una vez cancelada, no se podrá recuperar.');
+
+    if (confirmation) {
+      this.firestoreService.deleteDocument('horas', id)
+        .then(() => {
+          this.successMessage = 'Hora cancelada exitosamente.';
+          this.errorMessage = '';
+          this.getDocuments();
+        })
+        .catch((error) => {
+          console.error('Error al cancelar la hora:', error);
+          this.errorMessage = 'Hubo un problema al cancelar la hora. Intenta nuevamente.';
+          this.successMessage = '';
+        });
+    } else {
+      console.log('Cancelación de la hora cancelada por el usuario.');
     }
+  }
 
     // Getter to check if passwords match
     get passwordMismatch(): boolean {
