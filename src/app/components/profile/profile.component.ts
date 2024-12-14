@@ -82,9 +82,9 @@ export class ProfileComponent{
     });
   }
 
-  // Get documents from the 'todos' collection
+  // Get documents from the 'horas' collection
   getDocuments(): void {
-    this.firestoreService.getDocuments('todos').subscribe((documents) => {
+    this.firestoreService.getDocuments('horas').subscribe((documents) => {
       this.documents = documents;
     });
   }
@@ -117,7 +117,7 @@ export class ProfileComponent{
     };
 
     this.firestoreService
-      .updateDocument('todos', this.selectedDocument.id, updatedData)
+      .updateDocument('horas', this.selectedDocument.id, updatedData)
       .then(() => {
         console.log('Document updated');
         // Clear editing state
@@ -127,7 +127,7 @@ export class ProfileComponent{
 
     // Delete a document
     deleteDocument(id: string): void {
-      this.firestoreService.deleteDocument('todos', id).then(() => {
+      this.firestoreService.deleteDocument('horas', id).then(() => {
         console.log('Document deleted');
         this.getDocuments();
       });

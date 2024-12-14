@@ -125,7 +125,7 @@
                       <div *ngIf="activeCard === 'verHoras'">
                        <!-- Ver Horas Agendadas Content -->
                        <ul class="list-group">
-                        <li class="list-group-item" *ngFor="let hour of hours">
+                        <li class="list-group-item" *ngFor="let hour of documents">
                           {{ hour.date }} {{ hour.time }} con {{ hour.doctor }}
                           <button class="btn btn-danger btn-sm float-end ms-2">Cancelar</button>
                           <button class="btn btn-warning btn-sm float-end">Editar</button>
