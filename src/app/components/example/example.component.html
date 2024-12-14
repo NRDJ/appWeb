@@ -1,0 +1,102 @@
+<div class="container">
+  <h2 class="text-center my-4">Todos</h2>
+
+  <!-- Form inputs to create a new document -->
+  <div class="mb-3">
+    <label for="nameInput" class="form-label">Nombre:</label>
+    <input
+      type="text"
+      id="nameInput"
+      [(ngModel)]="nuevoNombre"
+      class="form-control"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="valueInput" class="form-label">Edad:</label>
+    <input
+      type="text"
+      id="valueInput"
+      [(ngModel)]="nuevaEdad"
+      class="form-control"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="valueInput" class="form-label">Fecha de Nacimiento:</label>
+    <input
+      type="text"
+      id="valueInput"
+      [(ngModel)]="nuevaFechaNacimiento"
+      class="form-control"
+    />
+  </div>
+
+  <button class="btn btn-primary mb-3" (click)="createDocument()">
+    Add Custom Document
+  </button>
+
+  <!-- Display the 'todos' collection from Firestore -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Edad</th>
+        <th>Fecha de Nacimiento</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let document of documents">
+        <td>{{ document.nombre }}</td>
+        <td>{{ document.edad }}</td>
+        <td>{{ document.fechaNacimiento }}</td>
+        <th>Acciones</th>
+        <td>
+          <!-- Delete button -->
+          <button class="btn btn-warning" (click)="selectDocument(document)">
+            Edit
+          </button>
+          <button class="btn btn-danger" (click)="deleteDocument(document.id)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- Edit form appears when a document is selected for editing -->
+  <div class="card mt-4" *ngIf="selectedDocument">
+    <div class="card-body">
+      <h4 class="card-title">Edit Document</h4>
+
+      <div class="mb-3">
+        <label for="editName" class="form-label">Nombre:</label>
+        <input
+          type="text"
+          id="editName"
+          [(ngModel)]="editNombre"
+          class="form-control"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="editAge" class="form-label">Edad:</label>
+        <input
+          type="text"
+          id="editAge"
+          [(ngModel)]="editEdad"
+          class="form-control"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="editFechaNac" class="form-label">Fecha de Nacimiento:</label>
+        <input
+          type="text"
+          id="editFechaNac"
+          [(ngModel)]="editFechaNacimiento"
+          class="form-control"
+        />
+      </div>
+
+      <button class="btn btn-success me-2" (click)="saveEdit()">Save Changes</button>
+      <button class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+    </div>
+  </div>
+</div>

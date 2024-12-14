@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {JsonService} from '../../services/json.service';
 import {CommonModule} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
-
+import { HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'app-lista-personas',
   standalone: true,

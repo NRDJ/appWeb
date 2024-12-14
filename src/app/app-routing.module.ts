@@ -8,6 +8,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { ListaPersonasComponent } from './components/lista-personas/lista-personas.component';
 import { authGuard } from './guards/auth.guard';
+import { ExampleComponent } from './components/example/example.component';
 
 const routes: Routes = [
   { 
@@ -21,13 +22,13 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'password-recovery', component: PasswordRecoveryComponent },
   { path: 'lista-personas', component: ListaPersonasComponent },
+  { path: 'example', component: ExampleComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' }
 ];
-
-
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule {}

@@ -18,38 +18,42 @@ import { EmailValidatorDirective } from './validators/email-validator.directive'
 import { AgeValidatorDirective } from './validators/age-validator.directive';
 import { ProfileComponent } from './components/profile/profile.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
-import { HttpClientModule } from '@angular/common/http'; 
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'; 
 import { AuthService } from './services/auth.service';
-import { ScheduleService } from './services/schedule.service';
 import { ConocenosComponent } from './components/conocenos/conocenos.component';
-import { S3ManagerComponent } from './components/s3-manager/s3-manager.component';
-@NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    HomeComponent,
-    NavbarComponent,
-    HeroSectionComponent,
-    ServiciosComponent,
-    UbicacionComponent,
-    FooterComponent,
-    RegistroComponent,
-    AgendarHoraComponent,
-    PasswordStrengthDirective,
-    EmailValidatorDirective,
-    AgeValidatorDirective,
-    ProfileComponent,
-    PasswordRecoveryComponent,
-    ConocenosComponent,
-    S3ManagerComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule
-  ],
-  providers: [AuthService, ScheduleService],
-  bootstrap: [AppComponent]
-})
+
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { firebaseConfig } from './firebase.config';
+
+import { CommonModule } from '@angular/common'; 
+import { ExampleComponent } from './components/example/example.component'; // Import ExampleComponent
+@NgModule({ declarations: [
+        AppComponent,
+        LoginComponent,
+        HomeComponent,
+        NavbarComponent,
+        HeroSectionComponent,
+        ServiciosComponent,
+        UbicacionComponent,
+        FooterComponent,
+        RegistroComponent,
+        AgendarHoraComponent,
+        PasswordStrengthDirective,
+        EmailValidatorDirective,
+        AgeValidatorDirective,
+        ProfileComponent,
+        PasswordRecoveryComponent,
+        ConocenosComponent,
+        ExampleComponent, 
+    ],
+    bootstrap: [AppComponent], 
+    imports: [
+        BrowserModule,
+        CommonModule,
+        AppRoutingModule,
+        BrowserModule,
+        AngularFireModule.initializeApp(firebaseConfig),
+        AngularFirestoreModule,
+        FormsModule], providers: [AuthService, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }

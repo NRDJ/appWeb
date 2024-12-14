@@ -19,7 +19,7 @@
                     <div class="card-body">
                       <button class="btn btn-primary w-100" (click)="setActiveCard('modificar')">Modificar Perfil</button>
 
-                      <form (ngSubmit)="onUpdateProfile()" #profileForm="ngForm" id="profileForm" *ngIf="activeCard === 'modificar'">
+                      <form #profileForm="ngForm" id="profileForm" *ngIf="activeCard === 'modificar'">
                         <div class="mb-3">
                           <label for="nombre" class="form-label">Nombre Completo</label>
                           <input name="username" #username="ngModel" [(ngModel)]="user.username" type="text" class="form-control" id="nombre" placeholder="Ingresa tu nombre completo" required minlength="3" readonly>
@@ -79,7 +79,7 @@
                   <div class="card">
                       <div class="card-body">
                           <button class="btn btn-primary w-100" (click)="setActiveCard('agendar')">Agendar Hora</button>
-                          <form id="agendarForm" (ngSubmit)="scheduleHour(agendarForm)" #agendarForm="ngForm" *ngIf="activeCard === 'agendar'">
+                          <form id="agendarForm" #agendarForm="ngForm" *ngIf="activeCard === 'agendar'">
                               <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre Completo</label>
                                 <input class="mt-5" name="username" #username="ngModel" [(ngModel)]="user.username" type="text" class="form-control" id="nombre2" placeholder="Ingresa tu nombre completo" required minlength="3" readonly>
@@ -127,8 +127,8 @@
                        <ul class="list-group">
                         <li class="list-group-item" *ngFor="let hour of hours">
                           {{ hour.date }} {{ hour.time }} con {{ hour.doctor }}
-                          <button class="btn btn-danger btn-sm float-end ms-2" (click)="deleteHour(hour)">Cancelar</button>
-                          <button class="btn btn-warning btn-sm float-end" (click)="editHour(hour.id || '', hour)">Editar</button>
+                          <button class="btn btn-danger btn-sm float-end ms-2">Cancelar</button>
+                          <button class="btn btn-warning btn-sm float-end">Editar</button>
                         </li>
                       </ul>
                       </div>
@@ -144,8 +144,8 @@
                        <ul class="list-group">
                         <li class="list-group-item" *ngFor="let hour of hours">
                           {{ hour.date }} {{ hour.time }} con {{ hour.doctor }}
-                          <button class="btn btn-danger btn-sm float-end ms-2" (click)="deleteHour(hour)">Cancelar</button>
-                          <button class="btn btn-warning btn-sm float-end" (click)="editHour(hour.id || '', hour)">Editar</button>
+                          <button class="btn btn-danger btn-sm float-end ms-2">Cancelar</button>
+                          <button class="btn btn-warning btn-sm float-end">Editar</button>
                         </li>
                       </ul>
                       </div>
