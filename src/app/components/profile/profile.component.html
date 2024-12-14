@@ -123,14 +123,85 @@
                     <div class="card-body">
                       <button class="btn btn-primary w-100" (click)="setActiveCard('verHoras')">Ver Horas Agendadas</button>
                       <div *ngIf="activeCard === 'verHoras'">
-                       <!-- Ver Horas Agendadas Content -->
-                       <ul class="list-group">
-                        <li class="list-group-item" *ngFor="let hour of documents">
-                          {{ hour.date }} {{ hour.time }} con {{ hour.doctor }}
-                          <button class="btn btn-danger btn-sm float-end ms-2">Cancelar</button>
-                          <button class="btn btn-warning btn-sm float-end">Editar</button>
-                        </li>
-                      </ul>
+                        <!-- Ver Horas Agendadas Content -->
+                        <div class="table-responsive mt-3">
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Doctor</th>
+                                <th>Acciones</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let hour of documents">
+                                <!-- Fecha -->
+                                <td>
+                                  <ng-container *ngIf="editingHour?.id === hour.id; else readDate">
+                                    <input type="date" class="form-control" [(ngModel)]="hour.date" />
+                                  </ng-container>
+                                  <ng-template #readDate>
+                                    {{ hour.date }}
+                                  </ng-template>
+                                </td>
+                        
+                                <!-- Hora -->
+                                <td>
+                                  <ng-container *ngIf="editingHour?.id === hour.id; else readTime">
+                                    <input type="time" class="form-control" [(ngModel)]="hour.time" />
+                                  </ng-container>
+                                  <ng-template #readTime>
+                                    {{ hour.time }}
+                                  </ng-template>
+                                </td>
+                        
+                                <!-- Doctor -->
+                                <td>
+                                  <ng-container *ngIf="editingHour?.id === hour.id; else readDoc">
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      [(ngModel)]="hour.doctor"
+                                    />
+                                  </ng-container>
+                                  <ng-template #readDoc>
+                                    {{ hour.doctor }}
+                                  </ng-template>
+                                </td>
+                        
+                                <!-- Acciones -->
+                                <td>
+                                  <ng-container *ngIf="editingHour?.id === hour.id; else normalActions">
+                                    <!-- Save / Cancel buttons when in edit mode -->
+                                    <button class="btn btn-success btn-sm" (click)="saveEdit(hour)">
+                                      Guardar
+                                    </button>
+                                    <button class="btn btn-secondary btn-sm ms-2 mt-2" (click)="cancelEdit()">
+                                      Cancelar
+                                    </button>
+                                  </ng-container>
+                                  <ng-template #normalActions>
+                                    <!-- Original Cancel & Reagendar buttons -->
+                                    <button
+                                      class="btn btn-danger btn-sm"
+                                      (click)="deleteDocument(hour.id)"
+                                    >
+                                      Cancelar
+                                    </button>
+                                    <button
+                                      class="btn btn-warning btn-sm me-2 mt-1"
+                                      (click)="editHour(hour)"
+                                    >
+                                      Reagendar
+                                    </button>
+                                  </ng-template>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        
                       </div>
                     </div>
                   </div>

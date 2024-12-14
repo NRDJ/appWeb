@@ -52,6 +52,9 @@ export class ProfileComponent{
   editEdad: string = '';
   editFechaNacimiento: string = '';
 
+  // Tracks the row being edited
+  editingHour: any = null;
+
   ngOnInit(): void {
     this.getDocuments();
     const loggedInUser = this.authService.getLoggedInUser();
@@ -98,37 +101,12 @@ export class ProfileComponent{
     this.editFechaNacimiento = doc.fechaNacimiento;
   }
 
-  // Cancel editing
-  cancelEdit(): void {
-    this.selectedDocument = null;
-    this.editNombre = '';
-    this.editEdad = '';
-    this.editFechaNacimiento = '';
-  }
-
-  // Save changes to the selected document
-  saveEdit(): void {
-    if (!this.selectedDocument) return;
-
-    const updatedData = {
-      nombre: this.editNombre,
-      edad: this.editEdad,
-      fechaNacimiento: this.editFechaNacimiento
-    };
-
-    this.firestoreService
-      .updateDocument('horas', this.selectedDocument.id, updatedData)
-      .then(() => {
-        console.log('Document updated');
-        // Clear editing state
-        this.cancelEdit();
-      });
-    }
 
     // Delete a document
     deleteDocument(id: string): void {
+      window.confirm('¿Estás seguro de que quieres cancelar esta hora? Una vez cancelada, no se podrá recuperar.');
       this.firestoreService.deleteDocument('horas', id).then(() => {
-        console.log('Document deleted');
+        console.log('hora cancelada');
         this.getDocuments();
       });
     }
@@ -175,6 +153,34 @@ export class ProfileComponent{
     setActiveCard(card: string): void {
       this.activeCard = this.activeCard === card ? '' : card;
     }
+
+    // Inline editing: Step 1 - Enter edit mode for a specific row
+  editHour(hour: any): void {
+    // Optionally clone it if you want to revert changes on cancel without re-fetch
+    // For simplicity, we modify `hour` directly
+    this.editingHour = { ...hour };  // store a copy in editingHour
+  }
+
+  // Step 2 - Save changes to Firestore
+  saveEdit(hour: any): void {
+    // If you are directly binding hour in the HTML, `hour` is already updated.
+    // But we've made a local copy in `editingHour`, so let's update using that.
+    this.firestoreService.updateDocument('horas', hour.id, {
+      date: hour.date,
+      time: hour.time,
+      doctor: hour.doctor
+    }).then(() => {
+      console.log('Document updated');
+      this.editingHour = null; // exit edit mode
+      this.getDocuments();     // refresh the list
+    });
+  }
+
+  // Step 3 - Cancel editing
+  cancelEdit(): void {
+    this.editingHour = null;
+    this.getDocuments(); // re-fetch to discard unsaved changes
+  }
 
   
   }
