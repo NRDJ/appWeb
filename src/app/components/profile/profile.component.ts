@@ -101,6 +101,7 @@ export class ProfileComponent{
       this.documents = documents;
     });
   }
+  
 
    // Select a document for editing
    selectDocument(doc: any): void {
